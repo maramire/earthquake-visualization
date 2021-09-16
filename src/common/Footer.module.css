@@ -1,0 +1,18 @@
+footer {
+    grid-area: footer;
+    
+    background-color: rgb(76, 27, 192);
+    font-size: 0.7em;
+    width: 100%;
+    color: white;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+a {
+    text-decoration: none;
+    color: orange;
+}

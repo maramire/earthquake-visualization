@@ -1,0 +1,49 @@
+header {
+    background-color: rgb(76, 27, 192);
+    color: white;
+    width: 100%;
+    font-size: 1.5em;
+    grid-area: header; /* set the grid-template-areas name */
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+/* home brand button */
+
+.brand {
+    font-size: 1.1em;
+    margin: 0 1em;
+}
+
+.brand a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* nav list - nav items */
+
+.nav-list {
+   display: flex; 
+}
+
+.nav-item {
+    list-style-type: none;
+    font-size: 0.7em;
+    margin-right: 1em;
+}
+
+.nav-item a {
+    text-decoration: none;
+    color: inherit;
+    transition: all ease-in-out 100ms;
+}
+
+.nav-item a:hover {
+    border-bottom: 3px solid white;
+}
+
+

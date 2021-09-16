@@ -1,0 +1,21 @@
+h1 {
+    font-size: 1.3em;
+}
+
+p {
+    font-size: 1em;
+}
+
+.main {
+    grid-area: main;
+    padding: 0.5em;
+  
+}
+
+.section-one {
+    grid-area: section-one;
+}
+
+.section-two {
+    grid-area: section-two;
+}
