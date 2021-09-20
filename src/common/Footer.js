@@ -1,11 +1,15 @@
-import styles from "./Footer.module.css";
+import footerStyles from "./Footer.module.css";
 
 function Footer() {
   return (
     <footer>
       <p>
         This website was made by{" "}
-        <a target="_blank" href="https://www.github.com/maramire">
+        <a
+          target="_blank"
+          href="https://www.github.com/maramire"
+          rel="noreferrer"
+        >
           maramire
         </a>{" "}
         using React!
