@@ -1,0 +1,17 @@
+h1 {
+    font-size: 1.3em;
+}
+
+p {
+    font-size: 1em;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    grid-area: main;
+    padding: 0.5em;
+    justify-content: center;    
+}
+
+
