@@ -7,15 +7,21 @@ p {
 }
 
 .main {
+    display: flex;
+    flex-direction: column;
     grid-area: main;
     padding: 0.5em;
-  
+    justify-content: center;    
 }
 
 .section-one {
     grid-area: section-one;
+    padding: 0.5em;
+    margin-right: 2em;
 }
 
 .section-two {
     grid-area: section-two;
+    padding: 0.5em;
+    margin-bottom: 1em;
 }

@@ -1,0 +1,30 @@
+.item {
+    display: flex;
+    align-items: center;
+    border: 1px solid black;
+    padding: 0 1em;
+    margin: 1rem 0;
+    height: 4em;
+}
+
+
+.index {
+    font-weight: 1000;    
+    width: 10%;
+}
+
+.date {
+    font-size: 0.6em;
+    width: 20%;
+    
+}
+
+.place {
+    font-size: 0.8em;
+    width: 50%;
+}
+
+.magnitude {
+    font-size: 1.2em;
+    width: 20%;
+}
