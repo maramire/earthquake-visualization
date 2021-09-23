@@ -56,22 +56,12 @@ function Events() {
       </div>
       <div className={styles["section-two"]}>
         <Card title="Events Map" footer="Location: Chile">
-          {isEventsEmpty && (
-            <Map
-              events={[]}
-              zoom={2.5}
-              lat={-36.33325814457118}
-              lng={-71.39361021304366}
-            />
-          )}
-          {!isEventsEmpty && (
-            <Map
-              events={events}
-              zoom={2.5}
-              lat={-36.33325814457118}
-              lng={-71.39361021304366}
-            />
-          )}
+          <Map
+            events={events}
+            zoom={2.5}
+            lat={-36.33325814457118}
+            lng={-71.39361021304366}
+          />
         </Card>
       </div>
     </Fragment>
