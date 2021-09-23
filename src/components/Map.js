@@ -1,14 +1,14 @@
 import ReactMapGL from "react-map-gl";
 import { useState, useMemo } from "react";
-import mapStyles from "./Map.module.css";
+import styles from "./Map.module.css";
 import MapMarker from "./MapMarker";
 
 function Map(props) {
   // set map viewport
   const [viewport, setViewport] = useState({
-    latitude: -36.33325814457118,
-    longitude: -71.39361021304366,
-    zoom: 2.5,
+    latitude: props.lat,
+    longitude: props.lng,
+    zoom: props.zoom,
   });
 
   // callback passed to MapMarker when marker is clicked
@@ -30,7 +30,7 @@ function Map(props) {
   );
 
   return (
-    <div className={mapStyles.map}>
+    <div className={styles.map}>
       <ReactMapGL
         {...viewport}
         width="100%"

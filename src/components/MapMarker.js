@@ -24,7 +24,7 @@ function MapMarker(props) {
         viewBox="0 0 24 24"
         style={{
           cursor: "pointer",
-          fill: "#d00",
+          fill: "#F75C03",
           stroke: "none",
           transform: `translate(${-SIZE / 2}px,${-SIZE}px)`,
         }}

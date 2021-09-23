@@ -28,8 +28,16 @@ p {
     margin-right: 2em;
 }
 
+.event-description {
+    font-size: 0.8em;
+}
+
 .section-two {
     grid-area: section-two;
     padding: 0.5em;
     margin-bottom: 1em;
+}
+
+.significance {
+    font-size: 0.7em;
 }

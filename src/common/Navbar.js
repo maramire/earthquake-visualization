@@ -5,14 +5,14 @@ function Navbar() {
     <header>
       <nav>
         <div className={styles.brand}>
-          <NavLink to="events">Earthquake Viewer</NavLink>
+          <NavLink to="/events">Earthquake Viewer</NavLink>
         </div>
         <ul className={styles["nav-list"]}>
           <li className={styles["nav-item"]}>
-            <NavLink to="events">Events</NavLink>
+            <NavLink to="/events">Events</NavLink>
           </li>
           <li className={styles["nav-item"]}>
-            <NavLink to="about">About</NavLink>
+            <NavLink to="/about">About</NavLink>
           </li>
         </ul>
       </nav>

@@ -4,12 +4,14 @@ header {
     width: 100%;
     font-size: 1.5em;
     grid-area: header; /* set the grid-template-areas name */
+    
 }
 
 nav {
     display: flex;
     align-items: center;
     height: 100%;
+    
 }
 
 /* home brand button */
@@ -17,6 +19,7 @@ nav {
 .brand {
     font-size: 1.1em;
     margin: 0 1em;
+    
 }
 
 .brand a {
@@ -43,7 +46,7 @@ nav {
 }
 
 .nav-item a:hover {
-    border-bottom: 3px solid white;
+    border-bottom: 3px solid #FF8600;
 }
 
 
