@@ -11,17 +11,17 @@ function Events() {
   return (
     <Fragment>
       <div className={styles.main}>
-        <h1>Lista de eventos</h1>
-        <p>Eventos ocurridos en los últimos días.</p>
+        <h1>Events List</h1>
+        <p>Last events tracked by USGS.</p>
       </div>
       <div className={styles["section-one"]}>
-        <Card title="Listado de eventos">
-          {isEventsEmpty && "No hay eventos para mostrar."}
+        <Card title="Events List">
+          {isEventsEmpty && "There's no events to show."}
           {!isEventsEmpty && <EventsList events={events} />}
         </Card>
       </div>
       <div className={styles["section-two"]}>
-        <Card title="Mapa de eventos" footer="Ubicación: Chile">
+        <Card title="Events Map" footer="Location: Chile">
           <Map
             events={events}
             zoom={2.5}

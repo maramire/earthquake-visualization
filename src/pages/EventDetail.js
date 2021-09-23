@@ -13,18 +13,18 @@ function EventDetail() {
   return (
     <Fragment>
       <div className={styles.main}>
-        <h1>Detalle de evento: {event.properties.title}</h1>
-        <p>Fecha de evento: {eventDate}</p>
+        <h1>Event Detail: {event.properties.title}</h1>
+        <p>Event Date: {eventDate}</p>
       </div>
       <div className={styles["section-one"]}>
         <Card title="Detalle de evento">
           <ul className={styles["event-description"]}>
             <li>
-              Magnitud: {`${event.properties.mag} ${event.properties.magType}`}
+              Magnitude: {`${event.properties.mag} ${event.properties.magType}`}
             </li>
-            <li>Profundidad: {`${event.geometry.coordinates[2]} km`}</li>
+            <li>Depth: {`${event.geometry.coordinates[2]} km`}</li>
             <li>
-              Significancia: {event.properties.sig}
+              Significance: {event.properties.sig}
               <span className={styles.significance}>/1000</span>
             </li>
           </ul>
