@@ -38,6 +38,10 @@ p {
     margin-bottom: 1em;
 }
 
+.value {
+    color: #758BFD
+}
+
 .significance {
     font-size: 0.7em;
 }
