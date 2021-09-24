@@ -40,7 +40,7 @@ function EventDetail() {
             <p>Event Date: {getEventDateFormatted(event.properties.time)}</p>
           </div>
           <div className={styles["section-one"]}>
-            <Card title="Detalle de evento">
+            <Card title="Event Detail">
               <ul className={styles["event-description"]}>
                 <li>
                   Magnitude:{" "}

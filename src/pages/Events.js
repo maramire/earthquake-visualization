@@ -1,4 +1,4 @@
-import { Fragment, useState, useEffect } from "react";
+import { Fragment, useState, useEffect, useLayoutEffect } from "react";
 import styles from "./Events.module.css";
 import Card from "../components/Card";
 import Map from "../components/Map";
@@ -8,15 +8,27 @@ import EventsList from "../components/EventsList";
 function Events() {
   const [events, setEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState();
   const isEventsEmpty = events.length <= 0;
+
+  // set initial date state
+  useEffect(() => {
+    const startDate = new Date();
+    setStartDate(formatInputDate(startDate));
+    const endDate = tomorrow(startDate); // here startDate is altered, but not the state
+    setEndDate(formatInputDate(endDate));
+  }, []);
 
   // send request only the first time the component was rendered
   useEffect(() => {
+    setIsLoading(true);
+    setEvents([]);
     const url = new URL("https://earthquake.usgs.gov/fdsnws/event/1/query");
     const params = {
       format: "geojson",
-      starttime: "2021-09-23",
-      endtime: "2021-09-24",
+      starttime: startDate,
+      endtime: endDate,
       minlatitude: "-75.05689251672965",
       maxlatitude: "-14.288953187818608",
       minlongitude: "-95.70302236800661",
@@ -33,14 +45,22 @@ function Events() {
       .then(
         (result) => {
           console.log(result);
-          setIsLoading(false);
           setEvents(result.features);
+          setIsLoading(false);
         },
         (error) => {
           setIsLoading(false);
         }
       );
-  }, []);
+  }, [startDate, endDate]);
+
+  // receives a date object an returns date object with one day added.
+  const tomorrow = (date) => new Date(date.setDate(date.getDate() + 1));
+
+  // get input formatted date, receives a Date object and returns a 'yyyy-mm-dd' string
+  const formatInputDate = (date) => date.toISOString().split("T")[0];
+  const updateStartDate = (e) => setStartDate(e.target.value);
+  const updateEndDate = (e) => setEndDate(e.target.value);
 
   return (
     <Fragment>
@@ -50,8 +70,34 @@ function Events() {
       </div>
       <div className={styles["section-one"]}>
         <Card title="Events List">
-          {isEventsEmpty && "There's no events to show."}
-          {!isEventsEmpty && <EventsList events={events} />}
+          <ul>
+            <li className={styles["form-control"]}>
+              <label> Start date:</label>
+              <input
+                type="date"
+                id="start"
+                name="trip-start"
+                defaultValue="2021-09-01"
+                value={startDate}
+                onChange={updateStartDate}
+              />
+            </li>
+            <li className={styles["form-control"]}>
+              <label>End date:</label>
+              <input
+                type="date"
+                id="end"
+                name="trip-start"
+                defaultValue="2021-09-02"
+                value={endDate}
+                onChange={updateEndDate}
+              />
+            </li>
+          </ul>
+
+          {isEventsEmpty && !isLoading && "There's no events to show."}
+          {isLoading && "Loading Data..."}
+          {!isEventsEmpty && !isLoading && <EventsList events={events} />}
         </Card>
       </div>
       <div className={styles["section-two"]}>

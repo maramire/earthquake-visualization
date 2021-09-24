@@ -33,3 +33,19 @@ p {
     padding: 0.5em;
     margin-bottom: 1em;
 }
+
+.form-control {
+    display: flex;
+    justify-content: center;
+}
+
+.form-control label {
+    font-size: 0.7em;
+    width: 30%;
+}
+
+input[type="date"]{
+    color: #4C1BC0;
+    margin: 0 1em;
+    font-size: 0.8em;
+}
