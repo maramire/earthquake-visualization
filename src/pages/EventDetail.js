@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom";
-import { events } from "./dummyData";
 import { Fragment, useEffect, useState } from "react";
 import styles from "./EventDetail.module.css";
 import Card from "../components/Card";
@@ -14,12 +13,12 @@ function EventDetail() {
   // send request only the first time the component was rendered
   useEffect(() => {
     const url = `https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&eventid=${eventId}`;
-    console.log("fetching single event");
+    //console.log("fetching single event");
     fetch(url)
       .then((res) => res.json())
       .then(
         (result) => {
-          console.log(result);
+          //console.log(result);
           setEvent(result);
           setDataIsLoaded(true);
         },

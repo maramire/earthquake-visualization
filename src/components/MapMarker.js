@@ -11,7 +11,7 @@ const SIZE = 20;
 function MapMarker(props) {
   const { data, onClick } = props;
 
-  console.log("rendering all markers");
+  //console.log("rendering all markers");
 
   return data.map((event, index) => (
     <Marker
