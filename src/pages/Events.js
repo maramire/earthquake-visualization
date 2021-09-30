@@ -3,13 +3,13 @@ import styles from "./Events.module.css";
 import Card from "../components/Card";
 import Map from "../components/Map";
 import EventsList from "../components/EventsList";
+import useFetch from "../hooks/useFetch";
 // import { events } from "./dummyData";
 
 function Events() {
-  const [events, setEvents] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const { isLoading, fetchedData: events, fetchData } = useFetch();
   const isEventsEmpty = events.length <= 0;
 
   // set initial date state
@@ -23,8 +23,7 @@ function Events() {
   // send request only the first time the component was rendered
   useEffect(() => {
     if (startDate && endDate) {
-      setIsLoading(true);
-      setEvents([]);
+      // construct the url to request
       const url = new URL("https://earthquake.usgs.gov/fdsnws/event/1/query");
       const params = {
         format: "geojson",
@@ -36,25 +35,13 @@ function Events() {
         maxlongitude: "-63.227436430506614",
         orderby: "time",
       };
-      // create the url with params
       Object.keys(params).forEach((key) =>
         url.searchParams.append(key, params[key])
       );
-      //console.log("fetching all events", url.href);
-      fetch(url)
-        .then((res) => res.json())
-        .then(
-          (result) => {
-            //console.log(result);
-            setEvents(result.features);
-            setIsLoading(false);
-          },
-          (error) => {
-            setIsLoading(false);
-          }
-        );
+      // sending the request
+      fetchData(url);
     }
-  }, [startDate, endDate]);
+  }, [startDate, endDate, fetchData]);
 
   // receives a date object an returns date object with one day added.
   const tomorrow = (date) => new Date(date.setDate(date.getDate() + 1));
