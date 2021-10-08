@@ -1,0 +1,15 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  grid-area: main;
+  padding: 0.5em;
+  margin-top: 2rem;
+  justify-content: center;
+}
+
+.section-two {
+  grid-area: section-two;
+  padding: 0.5em;
+  display: flex;
+  justify-content: center;
+}

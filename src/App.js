@@ -6,6 +6,7 @@ import EventDetail from "./pages/EventDetail";
 import NotFound from "./pages/NotFound";
 import About from "./pages/About";
 import Footer from "./common/Footer";
+import Login from "./pages/Login";
 
 function App() {
   return (
@@ -23,6 +24,9 @@ function App() {
         </Route>
         <Route path="/about">
           <About />
+        </Route>
+        <Route path="/login">
+          <Login />
         </Route>
         <Route path="*">
           <NotFound />
