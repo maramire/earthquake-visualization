@@ -9,7 +9,8 @@ import useFetch from "../hooks/useFetch";
 function Events() {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const { isLoading, fetchedData: events, fetchData } = useFetch();
+  const [events, setEvents] = useState([]);
+  const { isLoading, fetchData } = useFetch();
   const isEventsEmpty = events.length <= 0;
 
   // set initial date state
@@ -39,7 +40,9 @@ function Events() {
         url.searchParams.append(key, params[key])
       );
       // sending the request
-      fetchData(url);
+      fetchData(url).then((data) => {
+        setEvents(data);
+      });
     }
   }, [startDate, endDate, fetchData]);
 

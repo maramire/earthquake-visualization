@@ -6,28 +6,35 @@ import { useState, useCallback } from "react";
 const useFetch = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [serverError, setServerError] = useState(null);
-  const [fetchedData, setFetchedData] = useState([]);
 
   // using useCallback to memoize the callback
-  const fetchData = useCallback(async (url) => {
-    setFetchedData([]);
-    setIsLoading(true);
-    setServerError(null);
-    try {
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error("The data can't be fetched in this moment.");
+  const fetchData = useCallback(
+    async (
+      url,
+      options = {
+        method: "GET",
       }
-      const data = await response.json();
-      setFetchedData(data.features);
-      setIsLoading(false);
-    } catch (error) {
-      setServerError(error);
-      setIsLoading(false);
-    }
-  }, []);
+    ) => {
+      let data;
+      setIsLoading(true);
+      setServerError(null);
+      try {
+        const response = await fetch(url, options);
+        if (!response.ok) {
+          throw new Error("The data can't be fetched in this moment.");
+        }
+        data = await response.json();
+        setIsLoading(false);
+      } catch (error) {
+        setServerError(error);
+        setIsLoading(false);
+      }
+      return data;
+    },
+    []
+  );
 
-  return { isLoading, serverError, fetchedData, fetchData };
+  return { isLoading, serverError, fetchData };
 };
 
 export default useFetch;

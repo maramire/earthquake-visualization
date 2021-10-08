@@ -19,10 +19,10 @@ function Map(props) {
   // Only rerender markers if events has changed
   const markers = useMemo(
     () =>
-      props.events.map((city, index) => (
+      props.events.features?.map((city, index) => (
         <MapMarker
           key={`marker-${index}`}
-          data={props.events}
+          data={props.events.features}
           onClick={showEventDetail}
         />
       )),

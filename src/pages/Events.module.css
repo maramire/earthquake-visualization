@@ -1,51 +1,51 @@
 h1 {
-    font-size: 1.3em;
-    color: #4C1BC0;
-    margin: 0;
+  font-size: 1.3em;
+  color: #4c1bc0;
+  margin: 0;
 }
 
 p {
-    font-size: 1em;
+  font-size: 1em;
 }
 
 .main {
-    display: flex;
-    flex-direction: column;
-    grid-area: main;
-    padding: 0.5em;
-    margin-top: 2rem;
-    justify-content: center;    
+  display: flex;
+  flex-direction: column;
+  grid-area: main;
+  padding: 0.5em;
+  margin-top: 2rem;
+  justify-content: center;
 }
 
 .main p {
-    color: #758BFD;
+  color: #758bfd;
 }
 
-
 .section-one {
-    grid-area: section-one;
-    padding: 0.5em;
-    margin-right: 2em;
+  grid-area: section-one;
+  padding: 0.5em;
+  margin-right: 2em;
+  width: 400px;
 }
 
 .section-two {
-    grid-area: section-two;
-    padding: 0.5em;
-    margin-bottom: 1em;
+  grid-area: section-two;
+  padding: 0.5em;
+  margin-bottom: 1em;
 }
 
 .form-control {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .form-control label {
-    font-size: 0.7em;
-    width: 30%;
+  font-size: 0.7em;
+  width: 30%;
 }
 
-input[type="date"]{
-    color: #4C1BC0;
-    margin: 0 1em;
-    font-size: 0.8em;
+input[type="date"] {
+  color: #4c1bc0;
+  margin: 0 1em;
+  font-size: 0.8em;
 }

@@ -66,7 +66,7 @@ function EventDetail() {
           <div className={styles["section-two"]}>
             <Card title="Event Map">
               <Map
-                events={[event]}
+                events={{ features: [event] }}
                 zoom={6.5}
                 lat={event.geometry.coordinates[1]}
                 lng={event.geometry.coordinates[0]}
