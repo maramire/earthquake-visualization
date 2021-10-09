@@ -7,26 +7,32 @@ import NotFound from "./pages/NotFound";
 import About from "./pages/About";
 import Footer from "./common/Footer";
 import Login from "./pages/Login";
+import AuthContext from "./store/auth-context";
+import { useContext } from "react";
 
 function App() {
+  const authContext = useContext(AuthContext);
   return (
     <div className="container-grid">
       <Navbar />
       <Switch>
         <Route path="/" exact>
-          <Redirect to="events" />
+          <Redirect to="/events" />
         </Route>
         <Route path="/events" exact>
-          <Events />
+          {authContext.isLoggedIn && <Events />}
+          {!authContext.isLoggedIn && <Redirect to="/login" />}
         </Route>
         <Route path="/events/:eventId">
-          <EventDetail />
+          {authContext.isLoggedIn && <EventDetail />}
+          {!authContext.isLoggedIn && <Redirect to="/login" />}
+        </Route>
+        <Route path="/login">
+          {!authContext.isLoggedIn && <Login />}
+          {authContext.isLoggedIn && <Redirect to="/events" />}
         </Route>
         <Route path="/about">
           <About />
-        </Route>
-        <Route path="/login">
-          <Login />
         </Route>
         <Route path="*">
           <NotFound />

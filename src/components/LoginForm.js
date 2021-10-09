@@ -1,12 +1,14 @@
 import { useRef } from "react";
 import styles from "./LoginForm.module.css";
 import useFetch from "../hooks/useFetch";
+import { useContext } from "react";
+import AuthContext from "../store/auth-context";
 
 function LoginForm() {
   const email = useRef();
   const password = useRef();
-
-  const { fetchData, fetchedData } = useFetch();
+  const authContext = useContext(AuthContext);
+  const { fetchData } = useFetch();
 
   const loginHandler = async (event) => {
     event.preventDefault();
@@ -23,7 +25,7 @@ function LoginForm() {
       },
     };
     fetchData(url, options).then((data) => {
-      console.log(data);
+      authContext.login(data);
     });
   };
 
