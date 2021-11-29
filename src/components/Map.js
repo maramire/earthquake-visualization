@@ -1,20 +1,13 @@
 import ReactMapGL from "react-map-gl";
-import { useState, useMemo } from "react";
+import { useMemo, useRef, useContext } from "react";
 import styles from "./Map.module.css";
 import MapMarker from "./MapMarker";
+import MapContext from "../store/map-context";
 
 function Map(props) {
-  // set map viewport
-  const [viewport, setViewport] = useState({
-    latitude: props.lat,
-    longitude: props.lng,
-    zoom: props.zoom,
-  });
-
+  const mapRef = useRef();
+  const mapContext = useContext(MapContext);
   // callback passed to MapMarker when marker is clicked
-  const showEventDetail = (event) => {
-    console.log("show event detail", event);
-  };
 
   // Only rerender markers if events has changed
   const markers = useMemo(
@@ -23,19 +16,37 @@ function Map(props) {
         <MapMarker
           key={`marker-${index}`}
           data={props.events.features}
-          onClick={showEventDetail}
+          onClick={props.onEventClick}
         />
       )),
-    [props.events]
+    [props.events.features, props.onEventClick]
   );
 
+  const viewportChangeHandler = (viewport, interactionState) => {
+    mapContext.setViewport(viewport);
+  };
+
+  const touchEndHandler = (e) => {
+    const bounds = mapRef.current.getMap().getBounds();
+    console.log(bounds);
+    const coords = {
+      minLatitude: bounds._sw.lat.toString(),
+      maxLatitude: bounds._ne.lat.toString(),
+      minLongitude: bounds._sw.lng.toString(),
+      maxLongitude: bounds._ne.lng.toString(),
+    };
+    mapContext.setBounds(coords);
+  };
   return (
     <div className={styles.map}>
       <ReactMapGL
-        {...viewport}
+        {...mapContext.viewport}
+        ref={mapRef}
+        onMouseUp={touchEndHandler}
+        onWheel={touchEndHandler}
         width="100%"
         height="100%"
-        onViewportChange={(viewport) => setViewport(viewport)}
+        onViewportChange={viewportChangeHandler}
         mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}
       >
         {markers}

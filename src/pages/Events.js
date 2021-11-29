@@ -1,58 +1,49 @@
-import { Fragment, useState, useEffect } from "react";
+import { Fragment, useState, useEffect, useContext } from "react";
 import styles from "./Events.module.css";
 import Card from "../components/Card";
 import Map from "../components/Map";
 import EventsList from "../components/EventsList";
 import useFetch from "../hooks/useFetch";
-// import { events } from "./dummyData";
+import MapContext from "../store/map-context";
+import { useHistory } from "react-router-dom";
 
 function Events() {
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
   const [events, setEvents] = useState([]);
+  const mapContext = useContext(MapContext);
   const { isLoading, fetchData } = useFetch();
   const isEventsEmpty = events.length <= 0;
-
-  // set initial date state
-  useEffect(() => {
-    const startDate = new Date();
-    setStartDate(formatInputDate(startDate));
-    const endDate = tomorrow(startDate); // here startDate is altered, but not the state
-    setEndDate(formatInputDate(endDate));
-  }, []);
+  let history = useHistory();
 
   // send request only the first time the component was rendered
   useEffect(() => {
-    if (startDate && endDate) {
+    if (mapContext.startDate && mapContext.endDate) {
       // construct the url to request
       const url = new URL("https://earthquake.usgs.gov/fdsnws/event/1/query");
       const params = {
         format: "geojson",
-        starttime: startDate,
-        endtime: endDate,
-        minlatitude: "-75.05689251672965",
-        maxlatitude: "-14.288953187818608",
-        minlongitude: "-95.70302236800661",
-        maxlongitude: "-63.227436430506614",
+        starttime: mapContext.startDate,
+        endtime: mapContext.endDate,
+        minlatitude: mapContext.bounds.minLatitude,
+        maxlatitude: mapContext.bounds.maxLatitude,
+        minlongitude: mapContext.bounds.minLongitude,
+        maxlongitude: mapContext.bounds.maxLongitude,
         orderby: "time",
       };
       Object.keys(params).forEach((key) =>
         url.searchParams.append(key, params[key])
       );
       // sending the request
+      console.log("sending request...", url);
       fetchData(url).then((data) => {
         setEvents(data);
       });
     }
-  }, [startDate, endDate, fetchData]);
+  }, [fetchData, mapContext.bounds, mapContext.startDate, mapContext.endDate]);
 
-  // receives a date object an returns date object with one day added.
-  const tomorrow = (date) => new Date(date.setDate(date.getDate() + 1));
-
-  // get input formatted date, receives a Date object and returns a 'yyyy-mm-dd' string
-  const formatInputDate = (date) => date.toISOString().split("T")[0];
-  const updateStartDate = (e) => setStartDate(e.target.value);
-  const updateEndDate = (e) => setEndDate(e.target.value);
+  const showEventDetail = (event) => {
+    console.log("show event detail", event);
+    history.push(`/events/${event.id}`);
+  };
 
   return (
     <Fragment>
@@ -69,8 +60,8 @@ function Events() {
                 type="date"
                 id="start"
                 name="trip-start"
-                value={startDate}
-                onChange={updateStartDate}
+                value={mapContext.startDate}
+                onChange={mapContext.updateStartDate}
               />
             </li>
             <li className={styles["form-control"]}>
@@ -79,8 +70,8 @@ function Events() {
                 type="date"
                 id="end"
                 name="trip-start"
-                value={endDate}
-                onChange={updateEndDate}
+                value={mapContext.endDate}
+                onChange={mapContext.updateEndDate}
               />
             </li>
           </ul>
@@ -91,12 +82,11 @@ function Events() {
         </Card>
       </div>
       <div className={styles["section-two"]}>
-        <Card title="Events Map" footer="Location: Chile">
+        <Card title="Events Map">
           <Map
             events={events}
-            zoom={2.5}
-            lat={-36.33325814457118}
-            lng={-71.39361021304366}
+            viewport={mapContext.viewport}
+            onEventClick={showEventDetail}
           />
         </Card>
       </div>
