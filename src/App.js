@@ -6,12 +6,8 @@ import EventDetail from "./pages/EventDetail";
 import NotFound from "./pages/NotFound";
 import About from "./pages/About";
 import Footer from "./common/Footer";
-import Login from "./pages/Login";
-import AuthContext from "./store/auth-context";
-import { useContext } from "react";
 
 function App() {
-  const authContext = useContext(AuthContext);
   return (
     <div className="container-grid">
       <Navbar />
@@ -20,16 +16,10 @@ function App() {
           <Redirect to="/events" />
         </Route>
         <Route path="/events" exact>
-          {authContext.isLoggedIn && <Events />}
-          {!authContext.isLoggedIn && <Redirect to="/login" />}
+          <Events />
         </Route>
         <Route path="/events/:eventId">
-          {authContext.isLoggedIn && <EventDetail />}
-          {!authContext.isLoggedIn && <Redirect to="/login" />}
-        </Route>
-        <Route path="/login">
-          {!authContext.isLoggedIn && <Login />}
-          {authContext.isLoggedIn && <Redirect to="/events" />}
+          <EventDetail />
         </Route>
         <Route path="/about">
           <About />
