@@ -3,7 +3,8 @@ import { Fragment, useEffect, useState } from "react";
 import styles from "./EventDetail.module.css";
 import Card from "../components/Card";
 import Map from "../components/Map";
-import useEventsAPI from "../hooks/useEventsAPI";
+import useEventsAPI from "../hooks/useEventsAPI"; 
+import { formatInTimeZone } from "date-fns-tz";
 
 function EventDetail() {
   const { eventId } = useParams();
@@ -12,16 +13,19 @@ function EventDetail() {
   const { getEvent } = useEventsAPI()
   const isEventEmpty = !event?.properties
 
-  useEffect(async () => {
-    setIsLoading(true)
-    const params = {
-      format: "geojson",
-      eventid: eventId
+  useEffect(() => {
+    const fetchEvent = async () => {
+      setIsLoading(true)
+      const params = {
+        format: "geojson",
+        eventid: eventId
+      }
+      const data = await getEvent(params)      
+      setEvent(data);
+      setIsLoading(false)    
     }
-    const data = await getEvent(params)      
-    setEvent(data);
-    setIsLoading(false)        
-  }, [eventId]);
+    fetchEvent()
+  }, [getEvent, eventId]);
 
   return (
     <Fragment>
@@ -30,6 +34,18 @@ function EventDetail() {
           <div className={styles["section-one"]}>
             <Card title="Event Detail">
               <ul className={styles["event-description"]}>
+                <li>
+                  Date:{" "}
+                  <span
+                    className={styles.value}
+                  >{formatInTimeZone(event.properties.time, 'America/Santiago', 'dd/MM/yyyy HH:mm')}</span>
+                </li>
+                <li>
+                  Place:{" "}
+                  <span
+                    className={styles.value}
+                  >{`${event.properties.place}`}</span>
+                </li>
                 <li>
                   Magnitude:{" "}
                   <span

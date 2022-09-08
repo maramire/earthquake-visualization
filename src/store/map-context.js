@@ -1,3 +1,4 @@
+import { utcToZonedTime } from "date-fns-tz";
 import React from "react";
 import { useState, useEffect } from "react";
 
@@ -25,14 +26,14 @@ export const MapContextProvider = (props) => {
 
   // set initial date state
   useEffect(() => {
-    const startDate = new Date();
+    let startDate = utcToZonedTime(new Date(), 'America/Santiago');
     setStartDate(formatInputDate(startDate));
-    const endDate = tomorrow(startDate); // here startDate is altered, but not the state
+
+    let endDate = utcToZonedTime(new Date(), 'America/Santiago');
     setEndDate(formatInputDate(endDate));
   }, []);
 
   // receives a date object an returns date object with one day added.
-  const tomorrow = (date) => new Date(date.setDate(date.getDate() + 1));
 
   // get input formatted date, receives a Date object and returns a 'yyyy-mm-dd' string
   const formatInputDate = (date) => date.toISOString().split("T")[0];

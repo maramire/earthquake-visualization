@@ -3,56 +3,65 @@ import styles from "./Events.module.css";
 import Card from "../components/Card";
 import Map from "../components/Map";
 import EventsList from "../components/EventsList";
-import useFetch from "../hooks/useFetch";
 import MapContext from "../store/map-context";
 import { useHistory } from "react-router-dom";
 import useEventsAPI from "../hooks/useEventsAPI";
+import { zonedTime } from "../helpers/time";
 
 function Events() {
   const [events, setEvents] = useState([]);
-  const [_, setCount] = useState(0);
+  const [count, setCount] = useState(0)
   const [currentPage, setCurrentPage] = useState(1);
   const [pages, setPages] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const mapContext = useContext(MapContext);
   const { getEvents, countEvents } = useEventsAPI()
   const isEventsEmpty = events.features && events.features.length === 0;
-  console.log(isEventsEmpty)
   let history = useHistory();
 
-  useEffect(async () => {
-    setIsLoading(true)
-    const params = {
-      format: "geojson",
-      starttime: mapContext.startDate,
-      endtime: mapContext.endDate,
-      minlatitude: mapContext.bounds.minLatitude,
-      maxlatitude: mapContext.bounds.maxLatitude,
-      minlongitude: mapContext.bounds.minLongitude,
-      maxlongitude: mapContext.bounds.maxLongitude,
-    };
-    const data = await countEvents(params)
-    setCount(data.count);
-    setPages(Math.ceil(data.count/10))
-    setCurrentPage(1)
+  useEffect(() => {
+    if (mapContext.startDate && mapContext.endDate){
+      const fetchCountEvents = async () => {
+        setIsLoading(true)
+        const params = {
+          format: "geojson",
+          starttime: zonedTime(mapContext.startDate + ' 00:00:01').toISOString(),
+          endtime: zonedTime(mapContext.endDate + ' 23:59:59').toISOString(),
+          minlatitude: mapContext.bounds.minLatitude,
+          maxlatitude: mapContext.bounds.maxLatitude,
+          minlongitude: mapContext.bounds.minLongitude,
+          maxlongitude: mapContext.bounds.maxLongitude,
+        };
+        const data = await countEvents(params)
+        setPages(Math.ceil(data.count/10))
+        setCount(data.count)
+        setCurrentPage(1)
+      }
+      fetchCountEvents()    
+    }
   }, [countEvents, mapContext])
 
-  useEffect(async () => {
-    const params = {
-      format: "geojson",
-      starttime: mapContext.startDate,
-      endtime: mapContext.endDate,
-      minlatitude: mapContext.bounds.minLatitude,
-      maxlatitude: mapContext.bounds.maxLatitude,
-      minlongitude: mapContext.bounds.minLongitude,
-      maxlongitude: mapContext.bounds.maxLongitude,
-      orderby: mapContext.filter,
-      limit: 10,
-      offset: 1 + (+currentPage - 1)*10
-    };
-    const data = await getEvents(params)
-    setEvents(data)
-    setIsLoading(false)
+  useEffect(() => {
+    if (mapContext.startDate && mapContext.endDate){
+      const fetchGetEvents = async () => {
+        const params = {
+          format: "geojson",
+          starttime: zonedTime(mapContext.startDate + ' 00:00:01').toISOString(),
+          endtime: zonedTime(mapContext.endDate + ' 23:59:59').toISOString(),
+          minlatitude: mapContext.bounds.minLatitude,
+          maxlatitude: mapContext.bounds.maxLatitude,
+          minlongitude: mapContext.bounds.minLongitude,
+          maxlongitude: mapContext.bounds.maxLongitude,
+          orderby: mapContext.filter,
+          limit: 10,
+          offset: 1 + (+currentPage - 1)*10
+        };
+        const data = await getEvents(params)
+        setEvents(data)
+        setIsLoading(false)
+      }
+      fetchGetEvents()
+    }
   }, [getEvents, mapContext, currentPage]);
 
   const showEventDetail = (event) => {
@@ -75,14 +84,14 @@ function Events() {
               footer={
                 <div className={styles["pageselector"]} value={currentPage}>
                   {
-                    currentPage !== 1 ? <a onClick={subCurrentPage} href="#">&laquo;</a> : ''
+                    currentPage !== 1 ? <button onClick={subCurrentPage}>&laquo;</button> : ''
                   }
                   {
-                    !isEventsEmpty && !isLoading ? <a href="#">{currentPage}</a> : ''
+                    !isEventsEmpty && !isLoading ? <button>{currentPage}</button> : ''
                   }
                   
                   {
-                    currentPage < pages ? <a onClick={addCurrentPage} href="#">&raquo;</a> : ''
+                    currentPage < pages ? <button onClick={addCurrentPage}>&raquo;</button> : ''
                   }
                 </div>
               }>
@@ -117,9 +126,13 @@ function Events() {
               <option value="magnitude">Magnitud Descendente</option>
             </select>
           </div>
-          {isEventsEmpty && !isLoading && "There's no events to show."}
+          <div>
+            # of Events: {count}
+          </div>
           {isLoading && "Loading Data..."}
-          {!isEventsEmpty && !isLoading && <EventsList events={events} />}
+          {!isEventsEmpty && !isLoading && (
+            <EventsList events={events}/>
+          )}
         </Card>
       </div>
       <div className={styles["section-two"]}>

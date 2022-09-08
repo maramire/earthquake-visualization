@@ -1,6 +1,9 @@
+import { formatInTimeZone } from "date-fns-tz";
 import styles from "./EventsListItem.module.css";
+
 function EventsListItem(props) {
-  const eventDate = new Date(props.eventData.properties.time).toLocaleString();
+  
+  const eventDate = formatInTimeZone(props.eventData.properties.time, 'America/Santiago', 'dd/MM/yyyy HH:mm')
 
   return (
     <div className={styles.item}>

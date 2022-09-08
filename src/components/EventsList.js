@@ -4,6 +4,7 @@ import styles from "./EventsList.module.css";
 
 function EventsList(props) {
   return (
+    <>
     <div className={styles.list}>
       {props.events.features?.map((event, index) => (
         <Link key={event.id} className={styles.link} to={`events/${event.id}`}>
@@ -11,6 +12,7 @@ function EventsList(props) {
         </Link>
       ))}
     </div>
+    </>
   );
 }
 
