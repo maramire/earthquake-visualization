@@ -3,36 +3,29 @@ import { Fragment, useEffect, useState } from "react";
 import styles from "./EventDetail.module.css";
 import Card from "../components/Card";
 import Map from "../components/Map";
+import useEventsAPI from "../hooks/useEventsAPI";
 
 function EventDetail() {
-  // destructuring params
   const { eventId } = useParams();
   const [event, setEvent] = useState({});
-  const [dataIsLoaded, setDataIsLoaded] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const { getEvent } = useEventsAPI()
+  const isEventEmpty = !event?.properties
 
-  // send request only the first time the component was rendered
-  useEffect(() => {
-    const url = `https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&eventid=${eventId}`;
-    //console.log("fetching single event");
-    fetch(url)
-      .then((res) => res.json())
-      .then(
-        (result) => {
-          //console.log(result);
-          setEvent(result);
-          setDataIsLoaded(true);
-        },
-        (error) => {}
-      );
+  useEffect(async () => {
+    setIsLoading(true)
+    const params = {
+      format: "geojson",
+      eventid: eventId
+    }
+    const data = await getEvent(params)      
+    setEvent(data);
+    setIsLoading(false)        
   }, [eventId]);
-
-  function getEventDateFormatted(date) {
-    return new Date(date).toLocaleString();
-  }
 
   return (
     <Fragment>
-      {dataIsLoaded && (
+      {!isLoading && !isEventEmpty && (
         <Fragment>
           <div className={styles["section-one"]}>
             <Card title="Event Detail">
@@ -71,7 +64,7 @@ function EventDetail() {
           </div>
         </Fragment>
       )}
-      {!dataIsLoaded && (
+      {isLoading && (
         <div className={styles["section-one"]}>
           <h1>Loading data...</h1>
         </div>
