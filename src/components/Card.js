@@ -2,16 +2,18 @@ import styles from "./Card.module.css";
 
 function Card(props) {
   const header = props.title ? (
-    <p className={styles.title}>
-      {props.title}
-    </p>
+    <div className={styles.title}>
+      <p>
+        {props.title}
+      </p>
+    </div>
   ) : (
     ""
   );
   const footer = props.footer ? (
-    <p className={styles.footer}>
+    <div className={styles.footer}>
       {props.footer}
-    </p>
+    </div>
   ) : (
     ""
   );

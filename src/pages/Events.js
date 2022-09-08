@@ -84,15 +84,15 @@ function Events() {
               footer={
                 <div className={styles["pageselector"]} value={currentPage}>
                   {
-                    currentPage !== 1 ? <button onClick={subCurrentPage}>&laquo;</button> : ''
-                  }
-                  {
-                    !isEventsEmpty && !isLoading ? <button>{currentPage}</button> : ''
+                    !isEventsEmpty && !isLoading ? (
+                      <>
+                      <button disabled={currentPage === 1} onClick={subCurrentPage}>&laquo;</button>                   
+                      <button>{currentPage}</button>
+                      <button disabled={currentPage === pages} onClick={addCurrentPage}>&raquo;</button> 
+                      </>
+                      ) : ''
                   }
                   
-                  {
-                    currentPage < pages ? <button onClick={addCurrentPage}>&raquo;</button> : ''
-                  }
                 </div>
               }>
           <div className={styles["form-control"]}>
@@ -120,13 +120,13 @@ function Events() {
           <div className={styles["form-control"]}>
             <label>Order By:</label>
             <select value={mapContext.filter} onChange={mapContext.updateFilter}>
-              <option value="time">Más Recientes</option>
-              <option value="time-asc">Más Antiguos</option>
-              <option value="magnitude-asc">Magnitud Ascendente</option>
-              <option value="magnitude">Magnitud Descendente</option>
+              <option value="time">Most Recent</option>
+              <option value="time-asc">Oldest</option>
+              <option value="magnitude-asc">Magnitude (Asc)</option>
+              <option value="magnitude">Magnitude (Desc)</option>
             </select>
           </div>
-          <div>
+          <div className={styles["form-control"]}>
             # of Events: {count}
           </div>
           {isLoading && "Loading Data..."}

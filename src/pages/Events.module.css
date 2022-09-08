@@ -22,22 +22,26 @@ p {
 }
 
 .section-one {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   grid-area: section-one;
-  padding: 0.5em;
-  margin-right: 2em;
   width: 400px;
-  height: 100vh;
+  margin: 0 1rem;
 }
 
 .section-two {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   grid-area: section-two;
-  padding: 0.5em;
-  margin-bottom: 1em;
+  margin-bottom: 0 1rem;
 }
 
 .form-control {
+  padding: 0.5rem;
   display: flex;
-  justify-content: center;
+  justify-content: left;
 }
 
 .form-control label {
@@ -52,9 +56,8 @@ input[type="date"] {
 }
 
 .pageselector {
-  margin: auto auto;
-  width: 20%;
-  height: 30%;
+  width: 2rem;
+  height: 2rem;
   display: flex;
   gap: 1rem;
 }
