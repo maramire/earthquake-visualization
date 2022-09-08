@@ -8,6 +8,9 @@ const MapContext = React.createContext();
 export const MapContextProvider = (props) => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [filter, setFilter] = useState("time");
+  const [offset, setOffset] = useState(1);
+
   const [viewport, setViewport] = useState({
     latitude: -36.33325814457118,
     longitude: -71.39361021304366,
@@ -35,6 +38,8 @@ export const MapContextProvider = (props) => {
   const formatInputDate = (date) => date.toISOString().split("T")[0];
   const updateStartDate = (e) => setStartDate(e.target.value);
   const updateEndDate = (e) => setEndDate(e.target.value);
+  const updateFilter = (e) => setFilter(e.target.value);
+  const updateOffset = (e) => setOffset(e);
 
   const context = {
     viewport,
@@ -43,8 +48,12 @@ export const MapContextProvider = (props) => {
     setBounds,
     startDate,
     endDate,
+    filter,
+    offset,
     updateEndDate,
     updateStartDate,
+    updateFilter,
+    updateOffset
   };
 
   return (

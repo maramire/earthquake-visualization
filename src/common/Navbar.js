@@ -6,7 +6,7 @@ function Navbar() {
     <header>
       <nav>
         <div className={styles.brand}>
-          <NavLink to="/events">Earthquake Viewer</NavLink>
+          <NavLink to="/events">Home</NavLink>
         </div>
         <ul className={styles["nav-list"]}>
           <li className={styles["nav-item"]}>

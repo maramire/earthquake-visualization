@@ -34,10 +34,6 @@ function EventDetail() {
     <Fragment>
       {dataIsLoaded && (
         <Fragment>
-          <div className={styles.main}>
-            <h1>Event Detail: {event.properties.title}</h1>
-            <p>Event Date: {getEventDateFormatted(event.properties.time)}</p>
-          </div>
           <div className={styles["section-one"]}>
             <Card title="Event Detail">
               <ul className={styles["event-description"]}>
@@ -76,7 +72,7 @@ function EventDetail() {
         </Fragment>
       )}
       {!dataIsLoaded && (
-        <div className={styles.main}>
+        <div className={styles["section-one"]}>
           <h1>Loading data...</h1>
         </div>
       )}

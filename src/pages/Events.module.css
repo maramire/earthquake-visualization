@@ -26,6 +26,7 @@ p {
   padding: 0.5em;
   margin-right: 2em;
   width: 400px;
+  height: 100vh;
 }
 
 .section-two {
@@ -48,4 +49,16 @@ input[type="date"] {
   color: #4c1bc0;
   margin: 0 1em;
   font-size: 0.8em;
+}
+
+.pageselector {
+  margin: auto auto;
+  width: 20%;
+  height: 30%;
+  display: flex;
+  gap: 1rem;
+}
+
+a {
+  text-decoration: none;
 }

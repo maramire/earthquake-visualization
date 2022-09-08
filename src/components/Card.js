@@ -2,23 +2,27 @@ import styles from "./Card.module.css";
 
 function Card(props) {
   const header = props.title ? (
-    <li className={styles.title}>{props.title}</li>
+    <p className={styles.title}>
+      {props.title}
+    </p>
   ) : (
     ""
   );
   const footer = props.footer ? (
-    <li className={styles.footer}>{props.footer}</li>
+    <p className={styles.footer}>
+      {props.footer}
+    </p>
   ) : (
     ""
   );
 
   return (
     <div className={styles.card}>
-      <ul>
         {header}
-        <li className={styles.body}>{props.children}</li>
+      <div className={styles.body}>
+        {props.children}
+      </div>
         {footer}
-      </ul>
     </div>
   );
 }
