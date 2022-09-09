@@ -1,6 +1,5 @@
 import ReactMapGL from "react-map-gl";
 import { useMemo, useRef, useContext } from "react";
-import styles from "./Map.module.css";
 import MapMarker from "./MapMarker";
 import MapContext from "../store/map-context";
 
@@ -38,7 +37,7 @@ function Map(props) {
     mapContext.setBounds(coords);
   };
   return (
-    <div className={styles.map}>
+    <div >
       <ReactMapGL
         {...mapContext.viewport}
         ref={mapRef}

@@ -1,17 +1,16 @@
-import styles from "./Card.module.css";
-
 function Card(props) {
+  const titleStyle = {
+    'margin-bottom': '1rem'
+  }
   const header = props.title ? (
-    <div className={styles.title}>
-      <p>
+    <div style={titleStyle}>
         {props.title}
-      </p>
     </div>
   ) : (
     ""
   );
   const footer = props.footer ? (
-    <div className={styles.footer}>
+    <div >
       {props.footer}
     </div>
   ) : (
@@ -19,9 +18,9 @@ function Card(props) {
   );
 
   return (
-    <div className={styles.card}>
+    <div >
         {header}
-      <div className={styles.body}>
+      <div >
         {props.children}
       </div>
         {footer}

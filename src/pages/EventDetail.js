@@ -1,6 +1,5 @@
 import { useParams } from "react-router-dom";
 import { Fragment, useEffect, useState } from "react";
-import styles from "./EventDetail.module.css";
 import Card from "../components/Card";
 import Map from "../components/Map";
 import useEventsAPI from "../hooks/useEventsAPI"; 
@@ -31,44 +30,44 @@ function EventDetail() {
     <Fragment>
       {!isLoading && !isEventEmpty && (
         <Fragment>
-          <div className={styles["section-one"]}>
+          <div >
             <Card title="Event Detail">
-              <ul className={styles["event-description"]}>
+              <ul >
                 <li>
                   Date:{" "}
                   <span
-                    className={styles.value}
+                    
                   >{formatInTimeZone(event.properties.time, 'America/Santiago', 'dd/MM/yyyy HH:mm')}</span>
                 </li>
                 <li>
                   Place:{" "}
                   <span
-                    className={styles.value}
+                    
                   >{`${event.properties.place}`}</span>
                 </li>
                 <li>
                   Magnitude:{" "}
                   <span
-                    className={styles.value}
+                    
                   >{`${event.properties.mag} ${event.properties.magType}`}</span>
                 </li>
                 <li>
                   Depth:{" "}
                   <span
-                    className={styles.value}
+                    
                   >{`${event.geometry.coordinates[2]} km`}</span>
                 </li>
                 <li>
                   Significance:{" "}
-                  <span className={styles.value}>
+                  <span >
                     {event.properties.sig}
-                    <span className={styles.significance}>/1000</span>
+                    <span >/1000</span>
                   </span>
                 </li>
               </ul>
             </Card>
           </div>
-          <div className={styles["section-two"]}>
+          <div >
             <Card title="Event Map">
               <Map
                 events={{ features: [event] }}
@@ -81,7 +80,7 @@ function EventDetail() {
         </Fragment>
       )}
       {isLoading && (
-        <div className={styles["section-one"]}>
+        <div >
           <h1>Loading data...</h1>
         </div>
       )}

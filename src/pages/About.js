@@ -1,8 +1,7 @@
-import styles from "./About.module.css";
 
 function About() {
   return (
-    <div className={styles.main}>
+    <div >
       <h1>About</h1>
       <p>
         Earthquake viewer is a basic (non-responsive yet) website created with
