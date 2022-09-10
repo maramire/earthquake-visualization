@@ -1,20 +1,13 @@
-import { BottomNavigation } from "@mui/material";
-import MuiBottomNavigationAction from "@mui/material/BottomNavigationAction";
+import { BottomNavigation, BottomNavigationAction } from "@mui/material";
 import { Link } from "react-router-dom";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import HomeIcon from '@mui/icons-material/Home';
 import InfoIcon from '@mui/icons-material/Info';
-import { styled } from "@mui/material/styles";
 import { useState } from "react";
 
-const BottomNavigationAction = styled(MuiBottomNavigationAction)(`
-  :hover {
-    color: rgb(25, 118, 210)
-  }
-`);
 
 const headerStyle = {
-  'margin-bottom': '1rem'
+  'marginBottom': '1rem',
 };
 
 function Navbar() {
@@ -23,6 +16,19 @@ function Navbar() {
   return (
     <header style={headerStyle}>
       <BottomNavigation
+        sx = {{ 
+          background: '#F75C03',
+          "& .Mui-selected": {
+            background: "#111D4A",
+            color: "#FFF8F0"
+          },
+          "& .MuiBottomNavigationAction-root, svg": {
+            color: "#FFF8F0"
+          },
+          "& :hover": {
+            background: "#111D4A"
+          }
+        }}
         showLabels
         value={value}
         onChange={(event, newValue) => {

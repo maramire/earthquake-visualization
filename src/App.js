@@ -7,7 +7,6 @@ import NotFound from "./pages/NotFound";
 import About from "./pages/About";
 import Footer from "./common/Footer";
 import { Container } from "@mui/system";
-import { Grid } from "@mui/material";
 
 function App() {
   return (

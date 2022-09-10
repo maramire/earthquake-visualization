@@ -1,19 +1,17 @@
 import EventsListItem from "./EventsListItem";
-import { Link, List } from "@mui/material";
+import { Box, List } from "@mui/material";
 
 function EventsList(props) {
   return (
     <>
-      <List
-        height={400}
-        width={360}
-        itemSize={46}
-        itemCount={200}
-        overscanCount={5}
-      >
-        {props.events.features?.map((event, index) => (
-          <EventsListItem key={event.id} index={index} eventData={event} />
-        ))}
+      <List sx={{ height: '40vh', overflow: 'auto' }}>
+        {props.isLoading ? (
+          <Box sx={{ width: "100%" }}>Loading Data...</Box>
+        ): (
+          props.events.features?.map((event, index) => (
+            <EventsListItem key={event.id} index={index} eventData={event} />
+          ))
+        )}
       </List>
     </>
   );

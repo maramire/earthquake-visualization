@@ -1,6 +1,6 @@
 function Card(props) {
   const titleStyle = {
-    'margin-bottom': '1rem'
+    'marginBottom': '1rem'
   }
   const header = props.title ? (
     <div style={titleStyle}>
@@ -10,7 +10,7 @@ function Card(props) {
     ""
   );
   const footer = props.footer ? (
-    <div >
+    <div style={{padding: "0.5em"}}>
       {props.footer}
     </div>
   ) : (

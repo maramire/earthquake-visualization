@@ -1,17 +1,14 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import MapContext from "../store/map-context";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { FormControl, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 
 function EventsListInfo(props) {
   const mapContext = useContext(MapContext);
-  const countStyle = {
-    'margin-left': '0.2em'
-  }
+
   return (
     <>
-      <Stack spacing={2}>
+      <Stack sx={{ 'marginBottom': '2em' }} spacing={4} direction="row">
         <TextField
           id="start_date"
           label="Start Date"
@@ -22,6 +19,7 @@ function EventsListInfo(props) {
           InputLabelProps={{
             shrink: true,
           }}
+          size="small"
         />
         <TextField
           id="end_date"
@@ -33,8 +31,11 @@ function EventsListInfo(props) {
           InputLabelProps={{
             shrink: true,
           }}
+          size="small"
         />
-        <FormControl style={{width: 220}}>
+      </Stack>
+      <Stack spacing={2}>
+        <FormControl style={{ width: 220 }}>
           <InputLabel id="filter">Filter By</InputLabel>
           <Select
             labelId="filter"
@@ -42,6 +43,7 @@ function EventsListInfo(props) {
             value={mapContext.filter}
             onChange={mapContext.updateFilter}
             label="Filter By"
+            size="small"
           >
             <MenuItem value="time">Most Recent</MenuItem>
             <MenuItem value="time-asc">Oldest</MenuItem>
@@ -49,11 +51,8 @@ function EventsListInfo(props) {
             <MenuItem value="magnitude">Magnitude (Desc)</MenuItem>
           </Select>
         </FormControl>
-        <Typography variant="h6">
-          # of Events: 
-          <Typography style={countStyle} display="inline" variant="subtitle1">
-            {props.totalEvents}
-          </Typography>
+        <Typography >
+          # of Events: {props.totalEvents}
         </Typography>
       </Stack>
     </>

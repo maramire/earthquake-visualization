@@ -44,11 +44,12 @@ function Events() {
       };
       fetchCountEvents();
     }
-  }, [countEvents, mapContext]);
+  }, [countEvents, mapContext.bounds, mapContext.startDate, mapContext.endDate]);
 
   useEffect(() => {
     if (mapContext.startDate && mapContext.endDate) {
       const fetchGetEvents = async () => {
+        setIsLoading(true);
         const params = {
           format: "geojson",
           starttime: zonedTime(
@@ -69,7 +70,7 @@ function Events() {
       };
       fetchGetEvents();
     }
-  }, [getEvents, mapContext, currentPage]);
+  }, [getEvents, mapContext.bounds, mapContext.startDate, mapContext.endDate, mapContext.filter, currentPage]);
 
   const showEventDetail = (event) => {
     console.log("show event detail", event);
@@ -81,22 +82,22 @@ function Events() {
   };
 
   const boxStyle = {
-    'padding': '2rem'
+    'padding': '2rem',
+    width: '100%' 
   }
 
   return (
     <Fragment>
       <Grid
         container
-        spacing={{ xs: 2, md: 3 }}
         columns={{ xs: 4, sm: 8, md: 12 }}
       >
-        <Grid xs={4} sm={8} md={6}>
+        <Grid xs={4} sm={8} md={5}>
           <Box sx={boxStyle}>
             <Card
-              title={<Typography variant="h6">Events List</Typography>}
+              title={<Typography variant="h6" sx={{ color: '#111D4A' }}>Events List</Typography>}
               footer={
-                !isEventsEmpty && !isLoading ? (
+                !isEventsEmpty  ? (
                   <EventsListPagination
                     pages={pages}
                     currentPage={currentPage}
@@ -108,19 +109,19 @@ function Events() {
               }
             >
               <EventsListInfo totalEvents={count} />
-              {isLoading && "Loading Data..."}
-              {!isEventsEmpty && !isLoading && <EventsList events={events} />}
+              {!isEventsEmpty && <EventsList isLoading={isLoading} events={events} />}
             </Card>
           </Box>
         </Grid>
-        <Grid xs={4} sm={8} md={6}>
-          <Card title="Events Map">
-            <Map
-              events={events}
-              viewport={mapContext.viewport}
-              onEventClick={showEventDetail}
-            />
-          </Card>
+        <Grid xs={4} sm={4} md={7}>
+          <Box sx={boxStyle}>
+            <Card title={<Typography variant="h6">Events Map</Typography>}>
+              <Map
+                events={events}
+                onEventClick={showEventDetail}
+              />
+            </Card>
+          </Box>
         </Grid>
       </Grid>
     </Fragment>

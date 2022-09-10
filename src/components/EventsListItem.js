@@ -1,5 +1,4 @@
-import { Box, Card, CardActionArea, ListItem } from "@mui/material";
-import { Stack } from "@mui/system";
+import { Grid, Card, CardActionArea, ListItem } from "@mui/material";
 import { formatInTimeZone } from "date-fns-tz";
 
 function EventsListItem(props) {
@@ -10,32 +9,39 @@ function EventsListItem(props) {
   );
 
   const cardStyle = {
-    "margin-bottom": "0.5em",
+    "marginBottom": "0.5em",
     width: "100%",
-    "background-color": "#ffffff6e",
-    "&:hover": {
-      "background-color": "#ffffffff",
-    },
+    "backgroundColor": "#ffffff6e",
   };
 
   const commonStyles = {
-    "text-align": "center",
-    padding: "0.5em",
+    "textAlign": "center",
+    padding: "0.2em",
+    "fontSize": "13px"
   };
 
   return (
     <Card sx={cardStyle} variant="outlined">
       <CardActionArea href={`events/${props.eventData.id}`}>
         <ListItem>
-        <Stack sx={{ alignItems: "center", width: "100%"  }} direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 1, sm: 2, md: 4 }}>          
-          <Box sx={{ ...commonStyles, width: "30%" }}>{eventDate}</Box>
-          <Box sx={{ ...commonStyles, width: "50%" }}>
-            {props.eventData.properties.place}
-          </Box>
-          <Box
-            sx={{ ...commonStyles, width: "20%" }}
-          >{`${props.eventData.properties.mag} ${props.eventData.properties.magType}`}</Box>
-        </Stack>
+          <Grid
+            sx={{ alignItems: "center", width: "100%" }}
+            container
+            columns={{ xs: 2, sm: 8, md: 12 }}
+          >
+            <Grid xs={1} sm={4} md={4} sx={{ ...commonStyles, width: "30%" }}>
+              {eventDate}
+            </Grid>
+            <Grid xs={1} sm={4} md={4} sx={{ ...commonStyles, width: "50%" }}>
+              {props.eventData.properties.place ?? "No Place Information."}
+            </Grid>
+            <Grid
+              xs={2}
+              sm={4}
+              md={4}
+              sx={{ ...commonStyles, width: "20%" }}
+            >{`${props.eventData.properties.mag} ${props.eventData.properties.magType}`}</Grid>
+          </Grid>
         </ListItem>
       </CardActionArea>
     </Card>
