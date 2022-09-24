@@ -6,13 +6,13 @@ import EventDetail from "./pages/EventDetail";
 import NotFound from "./pages/NotFound";
 import About from "./pages/About";
 import Footer from "./common/Footer";
-import { Container } from "@mui/system";
+import { Box } from "@mui/material";
 
 function App() {
   return (
     <>
     <Navbar />
-    <Container>
+    <Box>
       <Switch>
         <Route path="/" exact>
           <Redirect to="/events" />
@@ -30,7 +30,7 @@ function App() {
           <NotFound />
         </Route>
       </Switch>
-    </Container>
+    </Box>
     <Footer />
     </>
   );

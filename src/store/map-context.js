@@ -1,5 +1,5 @@
 import { utcToZonedTime } from "date-fns-tz";
-import React from "react";
+import React, { useCallback, useRef } from "react";
 import { useState, useEffect } from "react";
 
 // creates context instance
@@ -11,6 +11,7 @@ export const MapContextProvider = (props) => {
   const [endDate, setEndDate] = useState("");
   const [filter, setFilter] = useState("time");
   const [offset, setOffset] = useState(1);
+  const mapRef = useRef();
 
   const [viewport, setViewport] = useState({
     latitude: -36.33325814457118,
@@ -42,7 +43,25 @@ export const MapContextProvider = (props) => {
   const updateFilter = (e) => setFilter(e.target.value);
   const updateOffset = (e) => setOffset(e);
 
+  const onSelectEvent = useCallback(({longitude, latitude}) => {
+    mapRef.current?.flyTo({center: [longitude, latitude], duration: 3000, zoom: 7.5});
+  }, []);
+
+  const updateBounds = useCallback(() => {
+    const bounds = mapRef.current.getMap().getBounds();
+    const coords = {
+      minLatitude: bounds._sw.lat.toString(),
+      maxLatitude: bounds._ne.lat.toString(),
+      minLongitude: bounds._sw.lng.toString(),
+      maxLongitude: bounds._ne.lng.toString(),
+    };
+    setBounds(coords);
+  }, []);
+
   const context = {
+    mapRef,
+    onSelectEvent,
+    updateBounds,
     viewport,
     setViewport,
     bounds,

@@ -33,8 +33,6 @@ function EventsListInfo(props) {
           }}
           size="small"
         />
-      </Stack>
-      <Stack spacing={2}>
         <FormControl style={{ width: 220 }}>
           <InputLabel id="filter">Filter By</InputLabel>
           <Select
@@ -51,10 +49,10 @@ function EventsListInfo(props) {
             <MenuItem value="magnitude">Magnitude (Desc)</MenuItem>
           </Select>
         </FormControl>
-        <Typography >
-          # of Events: {props.totalEvents}
-        </Typography>
       </Stack>
+      <Typography >
+        # of Events: {props.totalEvents}
+      </Typography>
     </>
   );
 }

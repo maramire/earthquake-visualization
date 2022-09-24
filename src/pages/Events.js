@@ -6,7 +6,7 @@ import MapContext from "../store/map-context";
 import { useHistory } from "react-router-dom";
 import useEventsAPI from "../hooks/useEventsAPI";
 import { zonedTime } from "../helpers/time";
-import { Grid, Typography } from "@mui/material";
+import { Button, Grid, Typography } from "@mui/material";
 import EventsListInfo from "../components/EventsListInfo";
 import EventsListPagination from "../components/EventsListPagination";
 import { Box } from "@mui/system";
@@ -86,6 +86,12 @@ function Events() {
     width: '100%' 
   }
 
+  const restoreMap = async () => {
+    mapContext.mapRef.current?.flyTo({center: [-71.39361021304366, -36.33325814457118], duration: 3000, zoom: 2.5});
+    await new Promise(resolve => setTimeout(resolve, 3000))
+    mapContext.updateBounds()
+  }
+
   return (
     <Fragment>
       <Grid
@@ -115,10 +121,15 @@ function Events() {
         </Grid>
         <Grid xs={4} sm={4} md={7}>
           <Box sx={boxStyle}>
-            <Card title={<Typography variant="h6">Events Map</Typography>}>
+            <Card title={<Typography variant="h6">Events Map</Typography>}
+                  footer={
+                    <Button onClick={restoreMap}>Restore Map</Button>
+                  }
+            >
               <Map
                 events={events}
                 onEventClick={showEventDetail}
+                viewport={mapContext.viewport}
               />
             </Card>
           </Box>
