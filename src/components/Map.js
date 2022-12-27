@@ -1,5 +1,5 @@
 import ReactMapGL from "react-map-gl";
-import { useMemo, useRef, useContext } from "react";
+import { useMemo, useContext } from "react";
 import MapMarker from "./MapMarker";
 import MapContext from "../store/map-context";
 import { Box, useMediaQuery } from "@mui/material";
@@ -7,10 +7,10 @@ import { useTheme } from '@mui/material/styles';
 
 function Map(props) {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.between('xs','md'));
+  const isMobile = useMediaQuery(theme.breakpoints.between('xs', 'md'));
 
-  const mapStyle = { height: "70vh", width: "50vw" }
-  const mobileMapStyle = { height: "70vh", width: "80vw" }
+  const mapStyle = { height: "70vh", width: "50vw", borderRadius: "10px" }
+  const mobileMapStyle = { height: "70vh", width: "80vw", borderRadius: "10px" }
 
   const mapContext = useContext(MapContext);
   // callback passed to MapMarker when marker is clicked
