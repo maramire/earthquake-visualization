@@ -1,18 +1,16 @@
 import { useParams } from "react-router-dom";
-import { Fragment, useContext, useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import Card from "../components/Card";
 import Map from "../components/Map";
 import useEventsAPI from "../hooks/useEventsAPI";
 import { formatInTimeZone } from "date-fns-tz";
 import { Box, Grid, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
-import MapContext from "../store/map-context";
 
 function EventDetail() {
   const { eventId } = useParams();
   const [event, setEvent] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-  const mapContext = useContext(MapContext)
   const { getEvent } = useEventsAPI();
   const isEventEmpty = !event?.properties;
 
